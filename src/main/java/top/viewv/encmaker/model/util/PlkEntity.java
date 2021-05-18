@@ -1,5 +1,5 @@
 package top.viewv.encmaker.model.util;
 
-public class Entity {
+public class PlkEntity {
     public String password;
 }

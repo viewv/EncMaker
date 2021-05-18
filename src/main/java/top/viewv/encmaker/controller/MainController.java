@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
 import top.viewv.encmaker.model.filesystem.EncBoxFileSystemProvider;
 import top.viewv.encmaker.model.location.LocationEntity;
 import top.viewv.encmaker.model.location.LocationSerialize;
-import top.viewv.encmaker.model.util.Entity;
-import top.viewv.encmaker.model.util.Serialize;
+import top.viewv.encmaker.model.util.PlkEntity;
+import top.viewv.encmaker.model.util.PlkSerialize;
 
 import java.awt.*;
 import java.io.File;
@@ -81,7 +81,7 @@ public class MainController implements Initializable {
             File selectPath = chooser.showDialog(null);
             if (selectPath != null) {
 
-                Entity entity = new Entity();
+                PlkEntity plkEntity = new PlkEntity();
 
                 String password;
 
@@ -119,9 +119,9 @@ public class MainController implements Initializable {
 
                 if (passwordresult.isPresent()){
                     password = passwordresult.get();
-                    entity.password = password;
+                    plkEntity.password = password;
 
-                    Serialize.serialize(entity, selectPath.getAbsolutePath()+File.pathSeparator+"p.lk");
+                    PlkSerialize.serialize(plkEntity, selectPath.getAbsolutePath()+File.pathSeparator+"p.lk");
 
                     locationEntity.location.put(name, selectPath.getAbsolutePath());
                     LocationSerialize.serialize(locationEntity, "vault.ser");
@@ -199,8 +199,8 @@ public class MainController implements Initializable {
                     File plk = new File(currentPath+File.pathSeparator+"p.lk");
 
                     if (plk.exists()){
-                        Entity entity = Serialize.deserialize(currentPath+File.pathSeparator+"p.lk");
-                        if (password.equals(entity.password)){
+                        PlkEntity plkEntity = PlkSerialize.deserialize(currentPath+File.pathSeparator+"p.lk");
+                        if (password.equals(plkEntity.password)){
                             FileSystemProvider provider = new EncBoxFileSystemProvider();
                             Map<String, String> env = new HashMap<>();
                             env.put(EncBoxFileSystemProvider.CIPHER_ALGORITHM, "AES");

@@ -8,25 +8,25 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class Serialize {
-    public static void serialize(Entity entity, String destfilename) throws FileNotFoundException {
+public class PlkSerialize {
+    public static void serialize(PlkEntity plkEntity, String destfilename) throws FileNotFoundException {
         Kryo kryo = new Kryo();
-        kryo.register(Entity.class);
+        kryo.register(PlkEntity.class);
         kryo.register(String.class);
 
         Output output = new Output(new FileOutputStream(destfilename));
-        kryo.writeObject(output, entity);
+        kryo.writeObject(output, plkEntity);
         output.close();
     }
 
-    public static Entity deserialize(String sourcefilename) throws FileNotFoundException {
+    public static PlkEntity deserialize(String sourcefilename) throws FileNotFoundException {
         Kryo kryo = new Kryo();
-        kryo.register(Entity.class);
+        kryo.register(PlkEntity.class);
         kryo.register(String.class);
 
         Input input = new Input(new FileInputStream(sourcefilename));
-        Entity entity = kryo.readObject(input, Entity.class);
+        PlkEntity plkEntity = kryo.readObject(input, PlkEntity.class);
         input.close();
-        return entity;
+        return plkEntity;
     }
 }
